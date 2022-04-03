@@ -57,7 +57,7 @@ class XiaomiSmartPlug {
             .miioCall('get_prop', ['power'])
             .then((isOn) => {
                 this.service
-                    .getCharacteristic(Characteristic.On)
+                    .getCharacteristic(this.Characteristic.On)
                     .updateValue(isOn === 'on');
             })
             .catch((e) => {
