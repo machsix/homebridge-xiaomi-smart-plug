@@ -14,7 +14,7 @@ class XiaomiSmartPlug {
         this.Service = this.api.hap.Service;
         this.Characteristic = this.api.hap.Characteristic;
 
-        this.name = config['name'] || 'Mi smart plug';
+        this.name = config['name'] || 'Xiaomi Mi Smart Plug';
         if (!config['ip']) {
             this.log('No IP address define for', this.name);
             return;
@@ -27,7 +27,7 @@ class XiaomiSmartPlug {
         this.token = config['token'];
 
         // Setup services
-        this.service = new this.Service(this.Service.Outlet);
+        this.service = new this.Service.Outlet(this.name);
         this.service
             .getCharacteristic(this.Characteristic.On)
             .onGet(this.getState.bind(this))
