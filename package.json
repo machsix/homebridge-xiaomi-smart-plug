@@ -1,8 +1,8 @@
 {
   "name": "homebridge-xiaomi-smart-plug",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "keywords": [
     "homebridge-plugin"
   ],

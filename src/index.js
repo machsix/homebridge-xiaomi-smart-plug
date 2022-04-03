@@ -1,4 +1,4 @@
-const miio = require('miio');
+const miio = require('./miio-wrap');
 
 module.exports = function (api) {
     api.registerAccessory('homebridge-xiaomi-smart-plug', XiaomiSmartPlug);
@@ -33,12 +33,12 @@ class XiaomiSmartPlug {
             .onGet(this.handleOnGet.bind(this))
             .onSet(this.handleOnSet.bind(this));
 
-        this.checkPlugState().catch((error) => this.log.error(error));
+        this.listenPlugState().catch((error) => this.log.error(error));
     }
 
     async getDevice() {
         if (this.device) return this.device;
-        this.log('Connect to device');
+        this.log('Connect to device at ', this.ip);
         try {
             this.device = await miio.device({
                 address: this.ip,
@@ -46,31 +46,25 @@ class XiaomiSmartPlug {
             });
         } catch (e) {
             this.device = undefined;
-            this.log.error('Device not connected', e);
+            this.log.error('Device is not connected', e);
         }
         return this.device;
     }
 
-    async checkPlugState() {
+    async listenPlugState() {
         const device = await this.getDevice();
-        device
-            .miioCall('get_prop', ['power'])
-            .then((isOn) => {
-                this.service
-                    .getCharacteristic(this.Characteristic.On)
-                    .updateValue(isOn === 'on');
-            })
-            .catch((e) => {
-                throw e;
-            });
+        device.on('powerChanged', (isOn) =>
+            this.service
+                .getCharacteristic(this.Characteristic.On)
+                .updateValue(isOn)
+        );
     }
 
     async handleOnGet() {
-        this.log('Get state...');
         try {
             const device = await this.getDevice();
-            const power =
-                (await device.miioCall('get_prop', ['power'])) === 'on';
+            const power = await device.power();
+            this.log('Get state: ', power);
             return power;
         } catch (e) {
             this.log.error('Error getting state', e);
@@ -79,10 +73,10 @@ class XiaomiSmartPlug {
     }
 
     async handleOnSet(state) {
-        this.log('Set state to', state);
+        this.log('Set state: ', state);
         try {
             const device = await this.getDevice();
-            await await device.miioCall('set_power', [state ? 'on' : 'off']);
+            await await device.power(state);
         } catch (e) {
             this.log.error('Error setting state', e);
             throw e;

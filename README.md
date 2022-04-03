@@ -9,7 +9,7 @@
 
 The following ones should be supported as they share the same API [https://github.com/rytilahti/python-miio/blob/master/miio/chuangmi_plug.py](https://github.com/rytilahti/python-miio/blob/master/miio/chuangmi_plug.py)
 - MODEL_CHUANGMI_PLUG_V3 = "chuangmi.plug.v3"
-- ~~MODEL_CHUANGMI_PLUG_V1 = "chuangmi.plug.v1"~~
+- MODEL_CHUANGMI_PLUG_V1 = "chuangmi.plug.v1"
 - MODEL_CHUANGMI_PLUG_M1 = "chuangmi.plug.m1"
 - MODEL_CHUANGMI_PLUG_M3 = "chuangmi.plug.m3"
 - MODEL_CHUANGMI_PLUG_V2 = "chuangmi.plug.v2"
