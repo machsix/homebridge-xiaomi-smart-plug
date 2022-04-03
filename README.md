@@ -1,4 +1,4 @@
-[![npm version](https://badge.fury.io/js/homebridge-xiaomi-smart-plug.svg)](https://badge.fury.io/js/homebridge-xiaomi-smart-plug)
+[![npm version](https://badge.fury.io/js/homebridge-xiaomi-smart-plug.svg)](https://badge.fury.io/js/homebridge-xiaomi-smart-plug.svg)
 # Homebridge Mi Smart Plug
 
 [Homebridge](https://github.com/nfarina/homebridge) plugin for Xiaomi Smart Plug
